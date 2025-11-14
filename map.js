@@ -87,12 +87,28 @@ map.on('load', async () => {
   (d) => d.end_station_id
 );
 
+stations = stations.map((station) => {
+  let id = station.short_name;
+  // arrivals
+  station.arrivals = arrivals.get(id) ?? 0;
+  // departures
+  station.departures = departures.get(id) ?? 0;
+  // total traffic
+  station.totalTraffic = station.arrivals + station.departures;
+  return station;
+});
+
+const radiusScale = d3
+  .scaleSqrt()
+  .domain([0, d3.max(stations, (d) => d.totalTraffic)])
+  .range([0, 25]);
+
   const circles = svg
   .selectAll('circle')
   .data(stations)
   .enter()
   .append('circle')
-  .attr('r', 5) // Radius of the circle
+  .attr('r', (d) => radiusScale(d.totalTraffic)) // Radius of the circle
   .attr('fill', 'steelblue') // Circle fill color
   .attr('stroke', 'white') // Circle border color
   .attr('stroke-width', 1) // Circle border thickness
@@ -116,15 +132,4 @@ map.on('moveend', updatePositions); // Final adjustment after movement ends
   } catch (error) {
     console.error('Error loading JSON:', error); // Handle errors
   }
-});
-
-stations = stations.map((station) => {
-  let id = station.short_name;
-  // arrivals
-  station.arrivals = arrivals.get(id) ?? 0;
-  // departures
-  station.departures = departures.get(id) ?? 0;
-  // total traffic
-  station.totalTraffic = station.arrivals + station.departures;
-  return station;
 });
