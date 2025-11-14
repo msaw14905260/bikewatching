@@ -29,8 +29,8 @@ map.on('load', async () => {
     source: 'boston_route',
     paint: {
       'line-color': 'green',
-      'line-width': 3,
-      'line-opacity': 0.4,
+      'line-width': 4,
+      'line-opacity': 0.5,
     },
   });
 });
