@@ -31,3 +31,34 @@ body {
   stroke-width: 1px;
   pointer-events: auto;
 }
+
+.page-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1rem 0;
+}
+
+.time-filter {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+#time-slider {
+  width: 260px;
+}
+
+
+.time-filter-label {
+  color: #444;
+}
+
+#any-time-label {
+  font-style: italic;
+  color: #666;
+  white-space: nowrap; 
+}
