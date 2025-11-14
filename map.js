@@ -74,7 +74,19 @@ map.on('load', async () => {
   const trips = await d3.csv(tripsUrl);
 
   console.log("Loaded Trips Data:", trips);
-  
+
+  const departures = d3.rollup(
+  trips,
+  (v) => v.length,
+  (d) => d.start_station_id
+);
+
+  const arrivals = d3.rollup(
+  trips,
+  (v) => v.length,
+  (d) => d.end_station_id
+);
+
   const circles = svg
   .selectAll('circle')
   .data(stations)
@@ -104,4 +116,15 @@ map.on('moveend', updatePositions); // Final adjustment after movement ends
   } catch (error) {
     console.error('Error loading JSON:', error); // Handle errors
   }
+});
+
+stations = stations.map((station) => {
+  let id = station.short_name;
+  // arrivals
+  station.arrivals = arrivals.get(id) ?? 0;
+  // departures
+  station.departures = departures.get(id) ?? 0;
+  // total traffic
+  station.totalTraffic = station.arrivals + station.departures;
+  return station;
 });
