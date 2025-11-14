@@ -52,12 +52,11 @@ body {
   width: 260px;
 }
 
-
 .time-filter-label {
   color: #444;
 }
 
-#any-time-label {
+#any-time {
   font-style: italic;
   color: #666;
   white-space: nowrap; 
