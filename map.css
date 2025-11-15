@@ -52,12 +52,16 @@ body {
   width: 260px;
 }
 
-.time-filter-label {
-  color: #444;
-}
-
 #any-time {
   font-style: italic;
   color: #666;
   white-space: nowrap; 
+}
+
+#selected-time,
+#any-time {
+  display: block;
+  min-height: 1.2em;
+  min-width: 4.5rem; 
+  text-align: right;
 }

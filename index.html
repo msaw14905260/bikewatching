@@ -29,17 +29,14 @@
     <h1>🚴🏼‍♀️ Bikewatching</h1>
 
     <label class="time-filter">
-      <span class="time-filter-label">Filter by time:</span>
-      <input
-        id="time-slider"
-        type="range"
-        min="-1"
-        max="1440"
-        value="-1"
-      />
-      <time id="selected-time"></time>
-      <em id="any-time">(any time)</em>
-    </label>
+  <span>Filter by time:</span>
+  <input id="time-slider" type="range" min="-1" max="1440" value="-1" />
+  <span class="time-readout">
+    <time id="selected-time"></time>
+    <em id="any-time">(any time)</em>
+  </span>
+</label>
+
   </header>
 
     <div id="map">
