@@ -198,7 +198,10 @@ function updateScatterPlot(timeFilter) {
   circles
     .data(filteredStations, (d) => d.short_name)
     .join('circle')
-    .attr('r', (d) => radiusScale(d.totalTraffic));
+    .attr('r', (d) => radiusScale(d.totalTraffic))
+    .style('--departure-ratio', (d) =>
+      stationFlow(d.departures / d.totalTraffic),
+    );
 
   updatePositions();
 }
@@ -226,3 +229,11 @@ updateTimeDisplay();
   }
 });
 
+let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
+
+const circles = svg
+  .selectAll('circle')
+  // previous code implemented ommitted for brevity
+  .style('--departure-ratio', (d) =>
+    stationFlow(d.departures / d.totalTraffic),
+  );
