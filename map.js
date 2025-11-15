@@ -147,16 +147,21 @@ const radiusScale = d3
   .domain([0, d3.max(stations, (d) => d.totalTraffic)])
   .range([0, 25]);
 
-  const circles = svg
+let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
+
+const circles = svg
   .selectAll('circle')
   .data(stations, (d) => d.short_name)
   .enter()
   .append('circle')
   .attr('r', (d) => radiusScale(d.totalTraffic)) // Radius of the circle
-  .attr('fill', 'steelblue') // Circle fill color
+  .attr('fill', 'steelblue') // Circle fill color (CSS will override)
   .attr('stroke', 'white') // Circle border color
   .attr('stroke-width', 1) // Circle border thickness
   .attr('opacity', 0.8) // Circle opacity
+  .style('--departure-ratio', (d) =>
+    stationFlow(d.departures / d.totalTraffic),
+  )
   .each(function (d) {
     // Add <title> for browser tooltips
     d3.select(this)
@@ -165,6 +170,7 @@ const radiusScale = d3
         `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
       );
   });
+
 
 function updatePositions() {
       circles
@@ -229,11 +235,3 @@ updateTimeDisplay();
   }
 });
 
-let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
-
-const circles = svg
-  .selectAll('circle')
-  // previous code implemented ommitted for brevity
-  .style('--departure-ratio', (d) =>
-    stationFlow(d.departures / d.totalTraffic),
-  );
